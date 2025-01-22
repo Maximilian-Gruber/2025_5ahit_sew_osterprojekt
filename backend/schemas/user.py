@@ -1,22 +1,13 @@
-from datetime import date
-
+import uuid
 from pydantic import BaseModel
+from models.enums import Role
 
 # User Schema
 
-
-class Base(BaseModel):
+class User(BaseModel):
     username: str
-    birthday: date
-
-
-class Register(Base):
     password: str
+    role: Role | None
 
-
-class Password(BaseModel):
-    password: str
-
-
-class Birthday(BaseModel):
-    birthday: date
+class UserDB(User):
+    userId: uuid.UUID

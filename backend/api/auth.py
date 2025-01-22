@@ -32,7 +32,6 @@ async def login(
     access_token = await create_access_token(data={"username": form_data.username})
     refresh_token = await create_refresh_token(data={"username": form_data.username})
 
-    await db.update_user_login(username=form_data.username)
     expired_time = (
         int(datetime.now(tz=timezone.utc).timestamp() * 1000)
         + timedelta(minutes=settings.access_token_expire_minutes).seconds * 1000
@@ -87,7 +86,6 @@ async def refresh(
     access_token = await create_access_token(data={"username": username})
     refresh_token = await create_refresh_token(data={"username": username})
 
-    db.update_user_login(username)
     expired_time = (
         int(datetime.now(tz=timezone.utc).timestamp() * 1000)
         + timedelta(minutes=settings.access_token_expire_minutes).seconds * 1000

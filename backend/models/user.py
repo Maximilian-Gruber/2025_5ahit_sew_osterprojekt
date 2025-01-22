@@ -1,23 +1,20 @@
-from datetime import datetime
-
-from sqlalchemy import Column, VARCHAR, DATE, DateTime
+from sqlalchemy import Column, VARCHAR, Uuid, Enum
 
 from database.config import Base
+from models.enums import Role
+import uuid
 
-
-# Create User class
-class UserModels(Base):
+class UserModel(Base):
     __tablename__ = "users"
-    username = Column(VARCHAR, unique=True, primary_key=True)
+    userId = Column(Uuid, primary_key=True, default=uuid.uuid4)
+    username = Column(VARCHAR)
     password = Column(VARCHAR)
-    birthday = Column(DATE)
-    create_time = Column(DateTime, default=datetime.utcnow())
-    last_login = Column(DateTime, default=datetime.utcnow())
+    role = Column(Enum(Role), default=Role.PLAYER)
 
-    def __init__(self, username: str, password: str, birthday: datetime):
+    def __init__(self, username: str, password: str, role: Role) -> None:
         self.username = username
         self.password = password
-        self.birthday = birthday
+        self.role = role
 
     def __repr__(self) -> str:
-        return f"<UserModels(username={self.username}, password={self.password}, birthday={self.birthday})>"
+        return f"<UserModels(username={self.username}, password={self.password})>"
