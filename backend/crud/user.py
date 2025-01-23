@@ -7,7 +7,7 @@ from typing import List
 from auth.utils import get_password_hash
 from models.user import UserModel
 import schemas.user as user_schema
-
+import uuid
 
 class UserCRUD:
     db_session = None
@@ -17,6 +17,12 @@ class UserCRUD:
 
     async def get_user_by_username(self, username: str):
         stmt = select(UserModel).where(UserModel.username == username)
+        result = await self.db_session.execute(stmt)
+        user = result.scalars().first()
+        return user
+
+    async def get_user_by_id(self, userId: str):
+        stmt = select(UserModel).where(UserModel.userId == userId)
         result = await self.db_session.execute(stmt)
         user = result.scalars().first()
         return user
@@ -37,7 +43,7 @@ class UserCRUD:
         await self.db_session.commit()
         return db_user
 
-    async def delete_user(self, username: str):
-        stmt = delete(UserModel).where(UserModel.username == username)
+    async def delete_user(self, userId: str):
+        stmt = delete(UserModel).where(UserModel.userId == userId)
         stmt.execution_options(synchronize_session="fetch")
         await self.db_session.execute(stmt)

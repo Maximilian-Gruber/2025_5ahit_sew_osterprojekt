@@ -27,7 +27,7 @@ async def register(
 
 @router.delete("")
 async def delete_user(
-    current_user: user_schema.User = Depends(get_current_user),
+    current_user: user_schema.UserDB = Depends(get_current_user),
     db: UserCRUD = Depends(get_user_crud),
 ):
-    return await db.delete_user(username=current_user.username)
+    return await db.delete_user(userId=current_user.userId)
