@@ -1,13 +1,13 @@
-from sqlalchemy import Column, VARCHAR, Uuid, DateTime, Boolean, ForeignKey
+from sqlalchemy import Column, Uuid, DateTime, Boolean, ForeignKey, String
 
 from database.config import Base
 import uuid
 
-class EventModels(Base):
+class EventModel(Base):
     __tablename__ = "events"
     eventId = Column(Uuid, primary_key=True, default=uuid.uuid4)
-    eventName = Column(VARCHAR)
-    description = Column(VARCHAR)
+    eventName = Column(String)
+    description = Column(String)
     date = Column(DateTime)
     isSeries = Column(Boolean)
     teamId = Column(ForeignKey("teams.teamId"))

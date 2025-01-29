@@ -7,8 +7,8 @@ user_teams = Table('user_teams', Base.metadata,
     Column('team_id', UUID, ForeignKey('teams.teamId'), primary_key=True)
 )
 
-#events_users = Table('events_users', Base.metadata,
- #   Column('event_id', Integer, ForeignKey('events.eventId'), primary_key=True),
-  #  Column('user_id', Integer, ForeignKey('users.userId'), primary_key=True),
-   # Column('state', Enum(State))
-#)
+events_users = Table('events_users', Base.metadata,
+    Column('event_id', UUID, ForeignKey('events.eventId'), primary_key=True),
+    Column('user_id', UUID, ForeignKey('users.userId'), primary_key=True),
+    Column('state', Enum(State))
+)
