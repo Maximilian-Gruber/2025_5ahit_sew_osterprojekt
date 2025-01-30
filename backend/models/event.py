@@ -8,7 +8,7 @@ class EventModel(Base):
     eventId = Column(Uuid, primary_key=True, default=uuid.uuid4)
     eventName = Column(String)
     description = Column(String)
-    date = Column(DateTime)
+    date = Column(DateTime(timezone=True))
     isSeries = Column(Boolean)
     teamId = Column(ForeignKey("teams.teamId"))
 

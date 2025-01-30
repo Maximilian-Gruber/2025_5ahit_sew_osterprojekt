@@ -10,5 +10,5 @@ user_teams = Table('user_teams', Base.metadata,
 events_users = Table('events_users', Base.metadata,
     Column('event_id', UUID, ForeignKey('events.eventId'), primary_key=True),
     Column('user_id', UUID, ForeignKey('users.userId'), primary_key=True),
-    Column('state', Enum(State))
+    Column('state', Enum(State), default=State.PENDING)
 )

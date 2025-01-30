@@ -1,6 +1,5 @@
 import uuid
 from pydantic import BaseModel
-from models.enums import Role
 
 # Team Schema
 
