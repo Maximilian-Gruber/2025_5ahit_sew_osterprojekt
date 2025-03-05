@@ -58,13 +58,10 @@
 </template>
   
 <script setup>
-import { useProfile } from '../store/me';
 
 const { 
-    me,
     reloadData,
     updatePassword,
-    updateBirthday,
     changeAccessToken,
 } = useProfile();
 

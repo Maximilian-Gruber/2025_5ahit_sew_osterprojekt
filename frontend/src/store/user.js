@@ -9,7 +9,7 @@ import router from "../router";
 
 function useFetchUser() {
   const userList = reactive([
-    {username: "",birthday: "",}
+    {username: "",}
   ]);
 
   const fetchUsers = async () => {

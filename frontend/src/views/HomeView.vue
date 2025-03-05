@@ -5,7 +5,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">User</th>
+                    <th scope="col">Userrrrrr</th>
                     <th scope="col">Birthday</th>
                 </tr>
             </thead>
@@ -13,7 +13,6 @@
                 <tr v-for="(user, idx) in userList.value" :key="idx">
                     <th scope="row">{{ idx + 1 }}</th>
                     <td>@{{ user.username }}</td>
-                    <td>{{ user.birthday }}</td>
                 </tr>
             </tbody>
         </table>
