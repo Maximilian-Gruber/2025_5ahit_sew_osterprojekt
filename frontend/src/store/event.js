@@ -121,5 +121,36 @@ function useDeclineEvent(eventId){
 
 }
 
+function createEvent(form){
+    const loadingStore = useLoadingStore();
+    const dialogStore = useDialogStore();
+    const authStore = useAuthStore();
 
-export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent };
+    loadingStore.setLoading();
+    console.log(form);
+
+    apiCreateEvent(form, authStore.access_token)
+    .then((res) => {
+        console.log(res);
+        dialogStore.setSuccess({
+          title: "Create Event Success",
+        });
+        setTimeout(() => {
+          router.push("/login");
+        },2010);
+      })
+      .catch((err) => {
+        console.log(err);
+        dialogStore.setError({
+          title: "Create Event Failed",
+        });
+      })
+      .finally(() => {
+        loadingStore.clearLoading();
+        setTimeout(() => {
+          dialogStore.reset();
+        }, 2000);
+      });
+}
+
+export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent, createEvent };

@@ -6,6 +6,7 @@ import RegisterView from '../views/RegisterView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RefreshView from '../views/RefreshView.vue'
 import EventView from '../views/EventView.vue'
+import CreateEventView from '../views/CreateEventView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -45,11 +46,17 @@ const routes = [
         name: 'Event',
         component: EventView,
     },
+    {
+        path: '/event/create',
+        name: 'CreateEvent',
+        component: CreateEventView,
+        meta: { requiresAuth: true },
+    },
 ]
 
 const router = createRouter({
     history: createWebHashHistory(),
-    routes, // short for `routes: routes`
+    routes,
 })
 
 router.beforeEach((to, from , next) => {
