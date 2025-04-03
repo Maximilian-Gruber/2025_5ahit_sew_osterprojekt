@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LogoutView from '../views/LogoutView.vue'
 import RefreshView from '../views/RefreshView.vue'
+import EventView from '../views/EventView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -38,6 +39,11 @@ const routes = [
         path: '/refresh',
         name: 'Refresh',
         component: RefreshView,
+    },
+    {
+        path: '/event/:eventId',
+        name: 'Event',
+        component: EventView,
     },
 ]
 

@@ -25,6 +25,7 @@ import { registerUser } from '../store/user';
 const form = ref({
     username: '',
     password: '',
+    role: 'player',
 });
 
 const submit = async () => {
