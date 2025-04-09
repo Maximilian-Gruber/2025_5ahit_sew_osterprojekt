@@ -136,13 +136,14 @@ function createEvent(form){
           title: "Create Event Success",
         });
         setTimeout(() => {
-          router.push("/login");
+          router.push("/");
         },2010);
       })
       .catch((err) => {
         console.log(err);
         dialogStore.setError({
           title: "Create Event Failed",
+          firstLine: err.response?.data?.detail || "An unexpected error occurred",
         });
       })
       .finally(() => {
@@ -151,6 +152,42 @@ function createEvent(form){
           dialogStore.reset();
         }, 2000);
       });
+}
+
+
+useGetPlayersByEvent(eventId) {
+    
+    const loadingStore = useLoadingStore();
+    const dialogStore = useDialogStore();
+    const authStore = useAuthStore();
+
+    const eventList = reactive([
+        {   eventId: "",
+            eventName: "",
+            description: "",
+            date: "",
+            isSeries: false,
+            teamId: "",
+        }
+    ]);
+
+    const fetchEvents = async () => {
+        loadingStore.setLoading();
+
+        try {
+            console.log(authStore.access_token);
+            const res = await apiGetEventList(authStore.access_token);
+            eventList.value = res.data;
+        } catch (err) {
+            console.log(err);
+        } finally {
+            loadingStore.clearLoading();
+        }
+    };
+
+    fetchEvents();
+
+    return { eventList };
 }
 
 export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent, createEvent };

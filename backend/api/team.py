@@ -12,7 +12,7 @@ router = APIRouter(prefix="/teams", tags=["teams"])
 
 @router.post("")
 async def register(
-    new_team: team_schema.Team, db: TeamCRUD = Depends(get_team_crud), current_user: user_schema.UserDB = Depends(get_current_user)
+    new_team: team_schema.TeamCreate, db: TeamCRUD = Depends(get_team_crud), current_user: user_schema.UserDB = Depends(get_current_user)
 ):
     if current_user.role != Role.COACH:
         raise HTTPException(status_code=403, detail="Only coaches can create teams")

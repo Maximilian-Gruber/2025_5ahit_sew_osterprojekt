@@ -14,13 +14,22 @@
                     <label for="dateField">Date</label>
                     <input v-model="form.date" type="date" class="form-control" id="dateField">
                 </div>
+                <div class="form-group">
+                    <label for="timeField">Time</label>
+                    <input v-model="form.time" type="time" class="form-control" id="timeField">
+                </div>
                 <div class="form-group form-check">
                     <input v-model="form.isSeries" type="checkbox" class="form-check-input" id="isSeriesField">
                     <label class="form-check-label" for="isSeriesField">Is Series</label>
                 </div>
                 <div class="form-group">
-                    <label for="teamIdField">Team ID</label>
-                    <input v-model="form.teamId" type="text" class="form-control" id="teamIdField">
+                    <label for="teamIdField">Team</label>
+                    <select v-model="form.teamId" class="form-control" id="teamIdField">
+                        <option disabled value="">Please select a team</option>
+                        <option v-for="team in teams" :key="team.teamId" :value="team.teamId">
+                            {{ team.teamName }}
+                        </option>
+                    </select>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary" v-on:click="submit">Create</button>
@@ -33,9 +42,12 @@
 <script>
 import { ref } from 'vue';
 import { createEvent } from '../store/event';
+import { useFetchTeams } from '../store/team';
 
 export default {
     setup() {
+        const { teams } = useFetchTeams();
+
         const form = ref({
             eventName: "",
             description: "",
@@ -46,12 +58,16 @@ export default {
 
         const submit = async (event) => {
             event.preventDefault();
-            const formattedForm = { ...form.value, date: new Date(form.value.date).toISOString() };
-            createEvent(formattedForm);
+            const formattedForm = {
+                ...form.value,
+                date: new Date(form.value.date).toISOString()
+            };
+            await createEvent(formattedForm);
         };
 
         return {
             form,
+            teams,
             submit,
         };
     },
@@ -76,7 +92,8 @@ label {
 }
 
 input,
-textarea {
+textarea,
+select {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;

@@ -7,6 +7,7 @@ import LogoutView from '../views/LogoutView.vue'
 import RefreshView from '../views/RefreshView.vue'
 import EventView from '../views/EventView.vue'
 import CreateEventView from '../views/CreateEventView.vue'
+import CreateTeamView from '../views/CreateTeamView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -52,6 +53,13 @@ const routes = [
         component: CreateEventView,
         meta: { requiresAuth: true },
     },
+    {
+        path: '/team/create',
+        name: 'CreateTeam',
+        component: CreateTeamView,
+        meta: { requiresAuth: true },
+    },
+
 ]
 
 const router = createRouter({

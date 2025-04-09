@@ -7,6 +7,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Event</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Team</th>
                 </tr>
             </thead>
             <tbody>
@@ -14,6 +15,7 @@
                     <td>{{ new Date(event.date).toLocaleString() }}</td>
                     <td>{{ event.eventName }}</td>
                     <td>{{ event.description }}</td>
+                    <td>{{ getTeamNameById(event.teamId)}}</td>
                 </tr>
             </tbody>
         </table>
@@ -22,21 +24,25 @@
 </template>
   
 <script setup>
-
 import { useFetchEvents } from '../store/event';
-const { eventList } = useFetchEvents();
-console.log(eventList);
-
+import { useFetchTeams } from '../store/team';
 import { useRouter } from 'vue-router';
+
+const { eventList } = useFetchEvents();
+const { teams } = useFetchTeams();
+
 const router = useRouter();
 
 function pushToEventView(event) {
-    console.log('pushToEventView', event.eventId);
     router.push({ name: 'Event', params: { eventId: event.eventId } });
-} 
+}
 
-
+function getTeamNameById(teamId) {
+    const team = teams.value.find(t => t.teamId === teamId);
+    return team ? team.teamName : '–';
+}
 </script>
+
 
 <style scoped>
 

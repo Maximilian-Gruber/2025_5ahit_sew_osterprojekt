@@ -9,3 +9,7 @@ class Team(BaseModel):
 
 class TeamDB(Team):
     teamId: uuid.UUID
+
+
+class TeamCreate(BaseModel):
+    teamName: str
