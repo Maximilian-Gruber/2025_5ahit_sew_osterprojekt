@@ -155,39 +155,4 @@ function createEvent(form){
 }
 
 
-useGetPlayersByEvent(eventId) {
-    
-    const loadingStore = useLoadingStore();
-    const dialogStore = useDialogStore();
-    const authStore = useAuthStore();
-
-    const eventList = reactive([
-        {   eventId: "",
-            eventName: "",
-            description: "",
-            date: "",
-            isSeries: false,
-            teamId: "",
-        }
-    ]);
-
-    const fetchEvents = async () => {
-        loadingStore.setLoading();
-
-        try {
-            console.log(authStore.access_token);
-            const res = await apiGetEventList(authStore.access_token);
-            eventList.value = res.data;
-        } catch (err) {
-            console.log(err);
-        } finally {
-            loadingStore.clearLoading();
-        }
-    };
-
-    fetchEvents();
-
-    return { eventList };
-}
-
 export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent, createEvent };
