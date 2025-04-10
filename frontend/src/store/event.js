@@ -81,20 +81,29 @@ function useConfirmEvent(eventId){
     const dialogStore = useDialogStore();
     const authStore = useAuthStore();
 
-    const confirmEvent = async () => {
-        loadingStore.setLoading();
-
-        try {
-            console.log(authStore.access_token);
-            const res = await apiConfirmEvent(eventId, authStore.access_token);
-        } catch (err) {
-            console.log(err);
-        } finally {
-            loadingStore.clearLoading();
-        }
-    };
-
-    confirmEvent();
+    apiConfirmEvent(eventId, authStore.access_token)
+    .then((res) => {
+        console.log(res);
+        dialogStore.setSuccess({
+          title: "Confirming Event successful",
+        });
+        setTimeout(() => {
+          router.push("/");
+        },2010);
+      })
+      .catch((err) => {
+        console.log(err);
+        dialogStore.setError({
+          title: "Confirming Event Failed",
+          firstLine: err.response?.data?.detail || "An unexpected error occurred",
+        });
+      })
+      .finally(() => {
+        loadingStore.clearLoading();
+        setTimeout(() => {
+          dialogStore.reset();
+        }, 2000);
+      });
 
 }
 
@@ -104,20 +113,29 @@ function useDeclineEvent(eventId){
     const dialogStore = useDialogStore();
     const authStore = useAuthStore();
 
-    const declineEvent = async () => {
-        loadingStore.setLoading();
-
-        try {
-            console.log(authStore.access_token);
-            const res = await apiDeclineEvent(eventId, authStore.access_token);
-        } catch (err) {
-            console.log(err);
-        } finally {
-            loadingStore.clearLoading();
-        }
-    };
-
-    declineEvent();
+    apiDeclineEvent(eventId, authStore.access_token)
+    .then((res) => {
+        console.log(res);
+        dialogStore.setSuccess({
+          title: "Declining Event successful",
+        });
+        setTimeout(() => {
+          router.push("/");
+        },2010);
+      })
+      .catch((err) => {
+        console.log(err);
+        dialogStore.setError({
+          title: "Declining Event Failed",
+          firstLine: err.response?.data?.detail || "An unexpected error occurred",
+        });
+      })
+      .finally(() => {
+        loadingStore.clearLoading();
+        setTimeout(() => {
+          dialogStore.reset();
+        }, 2000);
+      });
 
 }
 

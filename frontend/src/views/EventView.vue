@@ -1,5 +1,5 @@
 <template>
-    <div class="row d-flex justify-content-center mx-auto mt-5" v-if="event">
+    <div class="row d-flex justify-content-center mx-auto mt-5" v-if="event && event.value">
         <div class="col-6 pt-6">
             <h1>{{ event.value.eventName }}</h1>
             <p><strong>Event:</strong> {{ event.value.eventName }}</p>
@@ -49,10 +49,8 @@ const confirmEvent = async () => {
     if (!event.value?.eventId) return;
     try {
         await useConfirmEvent(event.value.eventId);
-        alert('Event confirmed successfully!');
     } catch (error) {
         console.error("Error confirming event:", error);
-        alert('Failed to confirm event.');
     }
 };
 
@@ -60,10 +58,8 @@ const declineEvent = async () => {
     if (!event.value?.eventId) return;
     try {
         await useDeclineEvent(event.value.eventId);
-        alert('Event declined successfully!');
     } catch (error) {
         console.error("Error declining event:", error);
-        alert('Failed to decline event.');
     }
 };
 

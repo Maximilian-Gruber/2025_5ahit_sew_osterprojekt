@@ -29,7 +29,7 @@ import { registerUser } from '../store/user';
 const form = ref({
     username: '',
     password: '',
-    role: '',
+    role: 'player',
 });
 
 const submit = async () => {
