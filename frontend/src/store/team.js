@@ -75,7 +75,7 @@ function createTeam(form){
     .then((res) => {
         console.log(res);
         dialogStore.setSuccess({
-          title: "Create Team Success",
+          title: "Team created successfully",
         });
         setTimeout(() => {
           router.push("/teams/");
@@ -84,7 +84,7 @@ function createTeam(form){
       .catch((err) => {
         console.log(err);
         dialogStore.setError({
-          title: "Create Team Failed",
+          title: "Failed to create team",
           firstLine: err.response?.data?.detail || "An unexpected error occurred",
         });
       })
@@ -108,7 +108,7 @@ function useDeleteTeam(teamId) {
         .then((res) => {
             console.log(res);
             dialogStore.setSuccess({
-                title: "Delete Team Success",
+                title: "Team deleted successfully",
             });
             setTimeout(() => {
               router.push("/teams/");
@@ -117,7 +117,7 @@ function useDeleteTeam(teamId) {
         .catch((err) => {
             console.log(err);
             dialogStore.setError({
-                title: "Delete Team Failed",
+                title: "Failed to delete team",
                 firstLine: err.response?.data?.detail || "An unexpected error occurred",
             });
         })

@@ -154,5 +154,36 @@ function createEvent(form){
       });
 }
 
+function useDeleteEvent(eventId) {
+    const loadingStore = useLoadingStore();
+    const dialogStore = useDialogStore();
+    const authStore = useAuthStore();
 
-export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent, createEvent };
+    loadingStore.setLoading();
+
+    apiDeleteEvent(eventId, authStore.access_token)
+        .then((res) => {
+            console.log(res);
+            dialogStore.setSuccess({
+                title: "Event deleted successfully",
+            });
+            setTimeout(() => {
+              router.push("/");
+            },2010);
+        })
+        .catch((err) => {
+            console.log(err);
+            dialogStore.setError({
+                title: "Failed to delete event",
+                firstLine: err.response?.data?.detail || "An unexpected error occurred",
+            });
+        })
+        .finally(() => {
+            loadingStore.clearLoading();
+            setTimeout(() => {
+                dialogStore.reset();
+            }, 2000);
+        });
+}
+
+export { useFetchEvents, useFetchEvent, useConfirmEvent, useDeclineEvent, createEvent, useDeleteEvent };

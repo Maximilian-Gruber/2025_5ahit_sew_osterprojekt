@@ -86,15 +86,11 @@ async def get_events_by_team(teamId: str, db_event: EventCRUD = Depends(get_even
 
 @router.post("/confirm/")
 async def confirm_event(eventId: str, db: EventCRUD = Depends(get_event_crud), current_user: user_schema.UserDB = Depends(get_current_user)):
-    if current_user.role != Role.COACH:
-        raise HTTPException(status_code=403, detail="Only coaches can confirm events")
     await db.confirm_event(eventId=eventId, userId=current_user.userId)
     return status.HTTP_200_OK
 
 
 @router.post("/decline/")
 async def decline_event(eventId: str, db: EventCRUD = Depends(get_event_crud), current_user: user_schema.UserDB = Depends(get_current_user)):
-    if current_user.role != Role.COACH:
-        raise HTTPException(status_code=403, detail="Only coaches can decline events")
     await db.decline_event(eventId=eventId, userId=current_user.userId)
     return status.HTTP_200_OK

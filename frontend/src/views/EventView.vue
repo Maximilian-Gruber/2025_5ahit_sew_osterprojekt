@@ -6,11 +6,12 @@
             <p><strong>Date:</strong> {{ formattedDate }}</p>
             <p><strong>Description:</strong> {{ event.value.description }}</p>
             <p><strong>Is Series:</strong> {{ event.value.isSeries }}</p>
-            <p><strong>Team ID:</strong> {{ event.value.teamId }}</p>
+            <p><strong>Team:</strong> {{ getTeamNameById(event.value.teamId) }}</p>
 
             <div class="mt-4 d-flex gap-2">
                 <button class="btn btn-success" @click="confirmEvent">Confirm</button>
                 <button class="btn btn-danger" @click="declineEvent">Decline</button>
+                <button class="btn btn-danger" @click="deleteEvent">Delete</button>
             </div>
         </div>
     </div>
@@ -22,10 +23,12 @@
 <script setup>
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { useFetchEvent, useConfirmEvent, useDeclineEvent } from '../store/event';
+import { useFetchEvent, useConfirmEvent, useDeclineEvent, useDeleteEvent } from '../store/event';
+import { useFetchTeams } from '../store/team';
 
 const router = useRouter();
 const { event } = useFetchEvent(router.currentRoute.value.params.eventId);
+const { teams } = useFetchTeams();
 
 const formattedDate = computed(() => {
     if (!event.value || !event.value.date) {
@@ -63,5 +66,20 @@ const declineEvent = async () => {
         alert('Failed to decline event.');
     }
 };
+
+const deleteEvent = async () => {
+    if (!event.value?.eventId) return;
+    try {
+        await useDeleteEvent(event.value.eventId);
+    } catch (error) {
+        console.error("Error deleting event:", error);
+    }
+};
+
+
+function getTeamNameById(teamId) {
+    const team = teams.value.find(t => t.teamId === teamId);
+    return team ? team.teamName : '–';
+}
 
 </script>
