@@ -10,7 +10,7 @@ class EventModel(Base):
     description = Column(String)
     date = Column(DateTime(timezone=True))
     isSeries = Column(Boolean)
-    teamId = Column(ForeignKey("teams.teamId"))
+    teamId = Column(ForeignKey("teams.teamId", ondelete="CASCADE"))
 
     def __init__(self, eventName: str, description: str, date: DateTime, isSeries: Boolean, teamId: Uuid):
         self.eventName = eventName

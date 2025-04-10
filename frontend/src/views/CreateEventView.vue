@@ -60,7 +60,7 @@ export default {
             event.preventDefault();
             const formattedForm = {
                 ...form.value,
-                date: new Date(form.value.date).toISOString()
+                date: new Date(`${form.value.date}T${form.value.time}`).toISOString()
             };
             await createEvent(formattedForm);
         };

@@ -19,9 +19,6 @@ async def create_event(
 ):
     if current_user.role != Role.COACH:
         raise HTTPException(status_code=403, detail="Only coaches can create events")
-    db_event = await db.get_event_by_eventname(eventName=new_event.eventName)
-    if db_event:
-        raise HTTPException(status_code=409, detail="Event already registered")
     await db.create_event(event=new_event, teamId=new_event.teamId)
     return status.HTTP_201_CREATED  
 

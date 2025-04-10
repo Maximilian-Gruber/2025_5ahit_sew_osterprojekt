@@ -1,6 +1,5 @@
-// store/team.js
-import { ref } from "vue";
-import { apiGetTeam, apiGetTeamsList, apiCreateTeam } from "../api/team";
+import { ref, reactive } from "vue";
+import { apiGetTeam, apiGetTeamsList, apiCreateTeam, apiDeleteTeam } from "../api/team";
 import { useLoadingStore } from "./loading";
 import { useDialogStore } from "./dialog";
 import { useAuthStore } from "./auth";
@@ -10,7 +9,6 @@ import router from "../router";
 function useFetchTeams() {
     const teams = ref([]);
     const loadingStore = useLoadingStore();
-    const dialogStore = useDialogStore();
     const authStore = useAuthStore();
 
     const fetchTeams = async () => {
@@ -52,7 +50,7 @@ function useFetchTeam(teamId) {
             console.log(authStore.access_token);
             const res = await apiGetTeam(teamId, authStore.access_token);
             team.value = res.data;
-        } catch (err) {
+          } catch (err) {
             console.log(err);
         } finally {
             loadingStore.clearLoading();
@@ -80,7 +78,7 @@ function createTeam(form){
           title: "Create Team Success",
         });
         setTimeout(() => {
-          router.push("/");
+          router.push("/teams/");
         },2010);
       })
       .catch((err) => {
@@ -98,4 +96,37 @@ function createTeam(form){
       });
 }
 
-export { useFetchTeams, useFetchTeam, createTeam };
+
+function useDeleteTeam(teamId) {
+    const loadingStore = useLoadingStore();
+    const dialogStore = useDialogStore();
+    const authStore = useAuthStore();
+
+    loadingStore.setLoading();
+
+    apiDeleteTeam(teamId, authStore.access_token)
+        .then((res) => {
+            console.log(res);
+            dialogStore.setSuccess({
+                title: "Delete Team Success",
+            });
+            setTimeout(() => {
+              router.push("/teams/");
+            },2010);
+        })
+        .catch((err) => {
+            console.log(err);
+            dialogStore.setError({
+                title: "Delete Team Failed",
+                firstLine: err.response?.data?.detail || "An unexpected error occurred",
+            });
+        })
+        .finally(() => {
+            loadingStore.clearLoading();
+            setTimeout(() => {
+                dialogStore.reset();
+            }, 2000);
+        });
+}
+
+export { useFetchTeams, useFetchTeam, createTeam, useDeleteTeam };

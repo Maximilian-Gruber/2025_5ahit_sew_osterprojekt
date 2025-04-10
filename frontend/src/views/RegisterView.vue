@@ -10,7 +10,11 @@
                     <label for="passwordField">Password</label>
                     <input v-model="form.password" type="password" class="form-control" id="passwordField">
                 </div>
-                <div class=" d-flex justify-content-center">
+                <div class="form-group form-check">
+                    <input v-model="form.role" type="checkbox" class="form-check-input" id="roleCheckbox" :true-value="'coach'" :false-value="'player'">
+                    <label class="form-check-label" for="roleCheckbox">Coach</label>
+                </div>
+                <div class="d-flex justify-content-center">
                     <button type="submit" class="btn btn-primary" v-on:click="submit">Register</button>
                 </div>
             </form>
@@ -25,11 +29,10 @@ import { registerUser } from '../store/user';
 const form = ref({
     username: '',
     password: '',
-    role: 'player',
+    role: '',
 });
 
 const submit = async () => {
     registerUser(form.value);
 }
-
 </script>

@@ -13,6 +13,9 @@
                             <router-link class="nav-link" to="/">Home</router-link>
                         </li>
                         <li class="nav-item">
+                            <router-link class="nav-link" to="/teams/">Teams</router-link>
+                        </li>
+                        <li class="nav-item">
                             <router-link class="nav-link" to="/team/create">Create Team</router-link>
                         </li>
                         <li class="nav-item">

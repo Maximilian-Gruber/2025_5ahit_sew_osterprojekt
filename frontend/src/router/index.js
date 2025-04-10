@@ -8,6 +8,8 @@ import RefreshView from '../views/RefreshView.vue'
 import EventView from '../views/EventView.vue'
 import CreateEventView from '../views/CreateEventView.vue'
 import CreateTeamView from '../views/CreateTeamView.vue'
+import TeamsView from '../views/TeamsView.vue'
+import TeamView from '../views/TeamView.vue'
 import { useAuthStore } from '../store/auth'
 
 const routes = [
@@ -57,6 +59,18 @@ const routes = [
         path: '/team/create',
         name: 'CreateTeam',
         component: CreateTeamView,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/teams/',
+        name: 'Teams',
+        component: TeamsView,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/teams/:teamId',
+        name: 'Team',
+        component: TeamView,
         meta: { requiresAuth: true },
     },
 

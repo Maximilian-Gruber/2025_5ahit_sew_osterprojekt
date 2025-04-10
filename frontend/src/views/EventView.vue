@@ -8,7 +8,6 @@
             <p><strong>Is Series:</strong> {{ event.value.isSeries }}</p>
             <p><strong>Team ID:</strong> {{ event.value.teamId }}</p>
 
-            <!-- Buttons für Bestätigung und Ablehnung -->
             <div class="mt-4 d-flex gap-2">
                 <button class="btn btn-success" @click="confirmEvent">Confirm</button>
                 <button class="btn btn-danger" @click="declineEvent">Decline</button>
